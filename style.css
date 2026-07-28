@@ -1,0 +1,454 @@
+/* Global Reset & Colors */
+:root {
+    --bg-gradient: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #0f0c1b 100%);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-hover-border: rgba(255, 255, 255, 0.2);
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0ba;
+    
+    /* Brand Colors */
+    --portfolio-glow: rgba(99, 102, 241, 0.15);
+    --linkedin-glow: rgba(10, 102, 194, 0.15);
+    --instagram-glow: rgba(225, 48, 108, 0.15);
+    --twitter-glow: rgba(29, 161, 242, 0.15);
+    --whatsapp-glow: rgba(37, 211, 102, 0.15);
+    
+    --portfolio-hover: #818cf8;
+    --linkedin-hover: #0077b5;
+    --instagram-hover: #e1306c;
+    --twitter-hover: #1d9bf0;
+    --whatsapp-hover: #25d366;
+    
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
+    padding: 2rem 1rem;
+}
+
+/* Background Particle FX styling */
+#particle-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+/* Main Container */
+.container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 580px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Profile Section Card */
+.profile-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.avatar-wrapper {
+    position: relative;
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 1.5rem;
+}
+
+.profile-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 2;
+    transition: transform var(--transition-speed) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.profile-avatar:hover {
+    transform: scale(1.08) rotate(3deg);
+}
+
+.avatar-glow {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #ff007f, #7f00ff, #00f0ff);
+    z-index: 1;
+    opacity: 0.6;
+    filter: blur(8px);
+    animation: spin-glow 6s linear infinite;
+}
+
+@keyframes spin-glow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.profile-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.profile-tagline {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.profile-bio {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+/* Links Container */
+.links-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+/* Individual Link Cards */
+.link-card {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 1.25rem 1.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all var(--transition-speed) cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.link-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 100px 30px, rgba(255, 255, 255, 0.03), transparent);
+    pointer-events: none;
+}
+
+.link-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    margin-right: 1.25rem;
+    transition: transform var(--transition-speed) ease;
+}
+
+.link-icon svg {
+    width: 24px;
+    height: 24px;
+    color: var(--text-secondary);
+    transition: color var(--transition-speed) ease;
+}
+
+.link-details {
+    flex-grow: 1;
+}
+
+.link-details h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.link-details p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+}
+
+.link-arrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.4;
+    transition: transform var(--transition-speed) ease, opacity var(--transition-speed) ease;
+}
+
+.link-arrow svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Hover States & Colors for Links */
+.link-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--card-hover-border);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+.link-card:hover .link-arrow {
+    transform: translateX(4px);
+    opacity: 1;
+}
+
+.link-card:hover .link-icon {
+    transform: scale(1.05);
+}
+
+/* Specific Link Hover Designs */
+.portfolio-link:hover {
+    background: var(--portfolio-glow);
+    box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.3);
+}
+.portfolio-link:hover .link-icon svg, .portfolio-link:hover .link-arrow svg {
+    color: var(--portfolio-hover);
+}
+
+.linkedin-link:hover {
+    background: var(--linkedin-glow);
+    box-shadow: 0 10px 30px -5px rgba(10, 102, 194, 0.3);
+}
+.linkedin-link:hover .link-icon svg, .linkedin-link:hover .link-arrow svg {
+    color: var(--linkedin-hover);
+}
+
+.instagram-link:hover {
+    background: var(--instagram-glow);
+    box-shadow: 0 10px 30px -5px rgba(225, 48, 108, 0.3);
+}
+.instagram-link:hover .link-icon svg, .instagram-link:hover .link-arrow svg {
+    color: var(--instagram-hover);
+}
+
+.twitter-link:hover {
+    background: var(--twitter-glow);
+    box-shadow: 0 10px 30px -5px rgba(29, 161, 242, 0.3);
+}
+.twitter-link:hover .link-icon svg, .twitter-link:hover .link-arrow svg {
+    color: var(--twitter-hover);
+}
+
+.whatsapp-link:hover {
+    background: var(--whatsapp-glow);
+    box-shadow: 0 10px 30px -5px rgba(37, 211, 102, 0.3);
+}
+.whatsapp-link:hover .link-icon svg {
+    color: var(--whatsapp-hover);
+}
+
+/* WhatsApp action buttons inside card */
+.link-action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 0.5rem 0.85rem;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.chat-btn:hover {
+    background: var(--whatsapp-hover);
+    border-color: var(--whatsapp-hover);
+    color: #000;
+}
+
+/* Interactive Stats */
+.interactive-stats {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.stat-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 1rem 2rem;
+    text-align: center;
+    flex: 1;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.stat-box:hover {
+    transform: scale(1.03);
+    border-color: var(--card-hover-border);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+    background: linear-gradient(45deg, #00f0ff, #7f00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Footer & Share Profile Button */
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.share-profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    border: none;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    transition: all var(--transition-speed) ease;
+}
+
+.share-profile-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+}
+
+.share-profile-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.copyright {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+/* Toast Notifications */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(255, 255, 255, 0.9);
+    color: #0f0c1b;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+/* Responsive adjustment */
+@media (max-width: 480px) {
+    body {
+        padding: 1rem 0.5rem;
+    }
+    .profile-card {
+        padding: 1.5rem 1rem;
+    }
+    .link-card {
+        padding: 1rem;
+    }
+    .link-icon {
+        width: 40px;
+        height: 40px;
+        margin-right: 0.75rem;
+    }
+    .link-details h3 {
+        font-size: 1rem;
+    }
+    .link-details p {
+        font-size: 0.8rem;
+    }
+}
