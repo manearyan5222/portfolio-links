@@ -1,18 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     // -----------------------------------------------------------------
-    // 1. Current Year & Storage Counters
+    // 1. Current Year & Utilities
     // -----------------------------------------------------------------
     const yearEl = document.getElementById('current-year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-    const likeCountEl = document.getElementById('like-count');
-    const shareCountEl = document.getElementById('share-count');
-
-    let likes = parseInt(localStorage.getItem('portfolio_likes') || '142', 10);
-    let shares = parseInt(localStorage.getItem('portfolio_shares') || '38', 10);
-
-    if (likeCountEl) likeCountEl.textContent = likes;
-    if (shareCountEl) shareCountEl.textContent = shares;
 
     // Toast Notification Utility
     const toast = document.getElementById('toast');
@@ -23,26 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => toast.classList.remove('show'), 2800);
     }
 
-    // Likes Click Event
-    const likesBox = document.getElementById('stat-likes');
-    if (likesBox) {
-        likesBox.addEventListener('click', () => {
-            likes++;
-            localStorage.setItem('portfolio_likes', likes);
-            likeCountEl.textContent = likes;
-            showToast('Thank you for the support! 💖');
-            createHeartExplosion(likesBox);
-        });
-    }
-
-    // Shares Click Event
-    const sharesBox = document.getElementById('stat-shares');
-    if (sharesBox) {
-        sharesBox.addEventListener('click', () => {
-            triggerShare();
-        });
-    }
-
     // Share Profile Button
     const shareProfileBtn = document.getElementById('share-profile-btn');
     if (shareProfileBtn) {
@@ -50,14 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function triggerShare() {
-        shares++;
-        localStorage.setItem('portfolio_shares', shares);
-        if (shareCountEl) shareCountEl.textContent = shares;
-
         if (navigator.share) {
             navigator.share({
                 title: document.title,
-                text: 'Check out Aryan Mane\'s portfolio & social links!',
+                text: 'Check out Aryan Mane\'s social links!',
                 url: window.location.href
             }).catch(err => console.log('Share canceled:', err));
         } else {
