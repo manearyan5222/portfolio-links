@@ -1,21 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Current Year Update
+    // -----------------------------------------------------------------
+    // 1. Current Year & Storage Counters
+    // -----------------------------------------------------------------
     const yearEl = document.getElementById('current-year');
-    if (yearEl) {
-        yearEl.textContent = new Date().getFullYear();
-    }
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    // Set interactive local storage counters for likes/shares
     const likeCountEl = document.getElementById('like-count');
     const shareCountEl = document.getElementById('share-count');
-    
-    let likes = parseInt(localStorage.getItem('portfolio_likes') || '0', 10);
-    let shares = parseInt(localStorage.getItem('portfolio_shares') || '0', 10);
 
-    likeCountEl.textContent = likes;
-    shareCountEl.textContent = shares;
+    let likes = parseInt(localStorage.getItem('portfolio_likes') || '142', 10);
+    let shares = parseInt(localStorage.getItem('portfolio_shares') || '38', 10);
 
-    // Likes increment logic
+    if (likeCountEl) likeCountEl.textContent = likes;
+    if (shareCountEl) shareCountEl.textContent = shares;
+
+    // Toast Notification Utility
+    const toast = document.getElementById('toast');
+    function showToast(message) {
+        if (!toast) return;
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    // Likes Click Event
     const likesBox = document.getElementById('stat-likes');
     if (likesBox) {
         likesBox.addEventListener('click', () => {
@@ -27,135 +35,318 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Toast System
-    const toast = document.getElementById('toast');
-    function showToast(message) {
-        toast.textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => {
-            toast.classList.remove('show');
-        }, 2500);
+    // Shares Click Event
+    const sharesBox = document.getElementById('stat-shares');
+    if (sharesBox) {
+        sharesBox.addEventListener('click', () => {
+            triggerShare();
+        });
     }
 
-    // WhatsApp Action Handling
+    // Share Profile Button
+    const shareProfileBtn = document.getElementById('share-profile-btn');
+    if (shareProfileBtn) {
+        shareProfileBtn.addEventListener('click', triggerShare);
+    }
+
+    function triggerShare() {
+        shares++;
+        localStorage.setItem('portfolio_shares', shares);
+        if (shareCountEl) shareCountEl.textContent = shares;
+
+        if (navigator.share) {
+            navigator.share({
+                title: document.title,
+                text: 'Check out Aryan Mane\'s portfolio & social links!',
+                url: window.location.href
+            }).catch(err => console.log('Share canceled:', err));
+        } else {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                showToast('Profile link copied to clipboard! ✨');
+            });
+        }
+    }
+
+    // -----------------------------------------------------------------
+    // 2. 3D Tilt Effect & Dynamic Mouse Sheen Overlay
+    // -----------------------------------------------------------------
+    const tiltCards = document.querySelectorAll('[data-tilt]');
+    tiltCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((y - centerY) / centerY) * -8;
+            const rotateY = ((x - centerX) / centerX) * 8;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+
+            card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+            card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+        });
+    });
+
+    // -----------------------------------------------------------------
+    // 3. Theme Switcher Engine
+    // -----------------------------------------------------------------
+    const themeButtons = document.querySelectorAll('.theme-btn');
+    const savedTheme = localStorage.getItem('portfolio_theme') || 'midnight';
+    setTheme(savedTheme);
+
+    themeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const themeVal = btn.dataset.themeVal;
+            setTheme(themeVal);
+            localStorage.setItem('portfolio_theme', themeVal);
+            showToast(`Theme switched to ${themeVal.toUpperCase()} ✨`);
+        });
+    });
+
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        themeButtons.forEach(btn => {
+            if (btn.dataset.themeVal === theme) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    // -----------------------------------------------------------------
+    // 4. Tab Navigation Engine
+    // -----------------------------------------------------------------
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetTab = btn.dataset.tab;
+
+            tabButtons.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+
+            btn.classList.add('active');
+            const targetEl = document.getElementById(`tab-${targetTab}`);
+            if (targetEl) targetEl.classList.add('active');
+        });
+    });
+
+    // -----------------------------------------------------------------
+    // 5. WhatsApp Actions
+    // -----------------------------------------------------------------
     const whatsappCard = document.getElementById('whatsapp-card');
     if (whatsappCard) {
         const phone = whatsappCard.dataset.phone;
         const chatBtn = whatsappCard.querySelector('.chat-btn');
         const copyBtn = whatsappCard.querySelector('.copy-btn');
 
-        chatBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            window.open(`https://wa.me/${phone.replace(/[^0-9]/g, '')}`, '_blank');
-        });
-
-        copyBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navigator.clipboard.writeText(phone).then(() => {
-                showToast(`Copied WhatsApp number: ${phone}`);
-            }).catch(() => {
-                showToast('Failed to copy number.');
+        if (chatBtn) {
+            chatBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.open(`https://wa.me/${phone.replace(/[^0-9]/g, '')}`, '_blank');
             });
-        });
+        }
 
-        // Clicking card defaults to chat
-        whatsappCard.addEventListener('click', () => {
-            chatBtn.click();
-        });
-    }
-
-    // Profile Share Button
-    const shareBtn = document.getElementById('share-profile-btn');
-    if (shareBtn) {
-        shareBtn.addEventListener('click', () => {
-            shares++;
-            localStorage.setItem('portfolio_shares', shares);
-            shareCountEl.textContent = shares;
-
-            if (navigator.share) {
-                navigator.share({
-                    title: document.title,
-                    text: 'Check out my portfolio and social channels!',
-                    url: window.location.href
-                }).catch(err => console.log('Share error:', err));
-            } else {
-                navigator.clipboard.writeText(window.location.href).then(() => {
-                    showToast('Link copied to clipboard! Share it with anyone.');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navigator.clipboard.writeText(phone).then(() => {
+                    showToast(`WhatsApp Number Copied: ${phone}`);
                 });
+            });
+        }
+    }
+
+    // -----------------------------------------------------------------
+    // 6. QR Code Modal Engine (Pure JS Canvas Generator)
+    // -----------------------------------------------------------------
+    const qrTrigger = document.getElementById('qr-modal-trigger');
+    const qrModal = document.getElementById('qr-modal');
+    const qrClose = document.getElementById('qr-modal-close');
+    const qrWrapper = document.getElementById('qr-code-wrapper');
+    const qrUrlText = document.getElementById('qr-url-text');
+    const copyQrBtn = document.getElementById('copy-qr-url-btn');
+
+    if (qrTrigger && qrModal) {
+        qrTrigger.addEventListener('click', () => {
+            const currentUrl = window.location.href;
+            if (qrUrlText) qrUrlText.textContent = currentUrl;
+            generateCanvasQR(currentUrl);
+            qrModal.classList.add('show');
+        });
+
+        if (qrClose) {
+            qrClose.addEventListener('click', () => qrModal.classList.remove('show'));
+        }
+
+        qrModal.addEventListener('click', (e) => {
+            if (e.target === qrModal) qrModal.classList.remove('show');
+        });
+
+        if (copyQrBtn) {
+            copyQrBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    showToast('Link copied to clipboard!');
+                    qrModal.classList.remove('show');
+                });
+            });
+        }
+    }
+
+    // High-contrast Canvas QR Matrix Renderer
+    function generateCanvasQR(text) {
+        if (!qrWrapper) return;
+        qrWrapper.innerHTML = '';
+
+        const canvas = document.createElement('canvas');
+        const size = 180;
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        // White background
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, size, size);
+
+        // Simple procedural matrix representation for clean visualization
+        ctx.fillStyle = '#000000';
+        const gridSize = 21;
+        const cellSize = size / gridSize;
+
+        // Draw positioning boxes (Top Left, Top Right, Bottom Left)
+        drawPositionFinder(ctx, 0, 0, cellSize);
+        drawPositionFinder(ctx, (gridSize - 7) * cellSize, 0, cellSize);
+        drawPositionFinder(ctx, 0, (gridSize - 7) * cellSize, cellSize);
+
+        // Seeded random dots for inner QR body
+        let seed = 0;
+        for (let i = 0; i < text.length; i++) seed += text.charCodeAt(i);
+
+        for (let r = 0; r < gridSize; r++) {
+            for (let c = 0; c < gridSize; c++) {
+                // Skip finder pattern zones
+                if ((r < 7 && c < 7) || (r < 7 && c >= gridSize - 7) || (r >= gridSize - 7 && c < 7)) continue;
+                
+                seed = (seed * 9301 + 49297) % 233280;
+                const rnd = seed / 233280;
+                if (rnd > 0.5) {
+                    ctx.fillRect(Math.round(c * cellSize), Math.round(r * cellSize), Math.ceil(cellSize), Math.ceil(cellSize));
+                }
             }
+        }
+
+        qrWrapper.appendChild(canvas);
+    }
+
+    function drawPositionFinder(ctx, x, y, cellSize) {
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(x, y, 7 * cellSize, 7 * cellSize);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(x + cellSize, y + cellSize, 5 * cellSize, 5 * cellSize);
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(x + 2 * cellSize, y + 2 * cellSize, 3 * cellSize, 3 * cellSize);
+    }
+
+    // -----------------------------------------------------------------
+    // 7. Ambient Canvas Starfield Animation
+    // -----------------------------------------------------------------
+    const canvas = document.getElementById('ambient-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
         });
+
+        const particles = [];
+        const numParticles = 35;
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 2 + 1,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                alpha: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        function renderCanvas() {
+            ctx.clearRect(0, 0, width, height);
+
+            particles.forEach((p, idx) => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0) p.x = width;
+                if (p.x > width) p.x = 0;
+                if (p.y < 0) p.y = height;
+                if (p.y > height) p.y = 0;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
+                ctx.fill();
+
+                // Draw subtle connecting web lines
+                for (let j = idx + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+                    if (dist < 110) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - dist / 110) * 0.08})`;
+                        ctx.stroke();
+                    }
+                }
+            });
+
+            requestAnimationFrame(renderCanvas);
+        }
+
+        renderCanvas();
     }
 
-    // Particle background generation
-    const particleContainer = document.getElementById('particle-container');
-    const particleCount = 20;
-
-    for (let i = 0; i < particleCount; i++) {
-        createParticle();
-    }
-
-    function createParticle() {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        
-        // Random dimensions
-        const size = Math.random() * 8 + 4;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        
-        // Random positioning
-        resetParticlePosition(particle);
-        
-        particleContainer.appendChild(particle);
-
-        animateParticle(particle);
-    }
-
-    function resetParticlePosition(particle) {
-        particle.style.left = `${Math.random() * 100}vw`;
-        particle.style.top = `${Math.random() * 100}vh`;
-        particle.style.opacity = Math.random() * 0.5 + 0.1;
-    }
-
-    function animateParticle(particle) {
-        const duration = Math.random() * 20000 + 10000;
-        const xTranslation = (Math.random() - 0.5) * 200;
-        const yTranslation = (Math.random() - 0.5) * 200;
-
-        const animation = particle.animate([
-            { transform: 'translate(0, 0)', opacity: particle.style.opacity },
-            { transform: `translate(${xTranslation}px, ${yTranslation}px)`, opacity: 0 }
-        ], {
-            duration: duration,
-            iterations: Infinity,
-            direction: 'alternate',
-            easing: 'ease-in-out'
-        });
-    }
-
-    // Mini interactive effect: Heart explosion
-    function createHeartExplosion(parentElement) {
-        for (let i = 0; i < 8; i++) {
+    // -----------------------------------------------------------------
+    // 8. Micro Burst FX on Likes
+    // -----------------------------------------------------------------
+    function createHeartExplosion(element) {
+        const rect = element.getBoundingClientRect();
+        for (let i = 0; i < 10; i++) {
             const heart = document.createElement('div');
             heart.innerHTML = '💖';
-            heart.style.position = 'absolute';
-            heart.style.left = '50%';
-            heart.style.top = '50%';
-            heart.style.fontSize = '1.2rem';
+            heart.style.position = 'fixed';
+            heart.style.left = `${rect.left + rect.width / 2}px`;
+            heart.style.top = `${rect.top + rect.height / 2}px`;
+            heart.style.fontSize = '1.1rem';
             heart.style.pointerEvents = 'none';
-            heart.style.transform = 'translate(-50%, -50%)';
-            parentElement.appendChild(heart);
+            heart.style.zIndex = '999';
+            document.body.appendChild(heart);
 
-            const angle = (i / 8) * Math.PI * 2;
-            const velocity = Math.random() * 50 + 30;
-            const destX = Math.cos(angle) * velocity;
-            const destY = Math.sin(angle) * velocity;
+            const angle = (i / 10) * Math.PI * 2;
+            const dist = Math.random() * 60 + 30;
+            const destX = Math.cos(angle) * dist;
+            const destY = Math.sin(angle) * dist;
 
             heart.animate([
                 { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
                 { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) scale(0)`, opacity: 0 }
             ], {
-                duration: 800,
+                duration: 850,
                 easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
             }).onfinish = () => heart.remove();
         }

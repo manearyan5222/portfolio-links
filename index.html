@@ -1,129 +1,245 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="midnight">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio & Connect Hub</title>
-    <meta name="description" content="Connect with me on LinkedIn, Instagram, WhatsApp, Twitter, and check out my personal portfolio.">
+    <title>Aryan Mane | Portfolio & Connect Hub</title>
+    <meta name="description" content="Official connect hub for Aryan Mane. Links to Portfolio, LinkedIn, Instagram, WhatsApp, Twitter, GitHub, and contact information.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Interactive Background Particle Container -->
-    <div id="particle-container"></div>
+    <!-- Canvas for Interactive Starfield / Ambient Particles -->
+    <canvas id="ambient-canvas"></canvas>
+    <div class="bg-glow-orb orb-1"></div>
+    <div class="bg-glow-orb orb-2"></div>
 
+    <!-- Top Action Bar -->
+    <div class="top-bar">
+        <div class="theme-switcher-container">
+            <span class="theme-label">Theme</span>
+            <div class="theme-options">
+                <button class="theme-btn active" data-theme-val="midnight" title="Midnight Glass">🌌</button>
+                <button class="theme-btn" data-theme-val="cyber" title="Cyber Neon">⚡</button>
+                <button class="theme-btn" data-theme-val="aurora" title="Aurora Violet">✨</button>
+                <button class="theme-btn" data-theme-val="sunset" title="Sunset Gold">🌅</button>
+            </div>
+        </div>
+        <button class="icon-action-btn" id="qr-modal-trigger" title="Show QR Code">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        </button>
+    </div>
+
+    <!-- Main Container -->
     <div class="container">
         <!-- Profile Header -->
         <header class="profile-card">
-            <div class="avatar-wrapper">
-                <div class="avatar-glow"></div>
-                <img src="avatar-placeholder.png" alt="Profile Avatar" class="profile-avatar" id="profile-avatar">
+            <div class="status-badge">
+                <span class="status-pulse"></span>
+                <span>Available for Projects</span>
             </div>
-            <h1 class="profile-name">Your Name</h1>
-            <p class="profile-tagline">Digital Creator & Developer</p>
-            <p class="profile-bio">Building clean, interactive, and modern digital experiences. Let's connect and create something amazing together.</p>
+
+            <div class="avatar-container">
+                <div class="avatar-ring-outer"></div>
+                <div class="avatar-ring-inner"></div>
+                <img src="avatar-placeholder.png" alt="Aryan Mane Profile" class="profile-avatar" id="profile-avatar">
+            </div>
+
+            <h1 class="profile-name">Aryan Mane</h1>
+            <p class="profile-handle">@manearyan5222</p>
+            <p class="profile-bio">Full-Stack Developer & Tech Enthusiast building high-performance web applications and sleek digital experiences.</p>
+
+            <div class="tags-container">
+                <span class="tag-chip">💻 Web Dev</span>
+                <span class="tag-chip">🚀 Creative Tech</span>
+                <span class="tag-chip">✨ Open Source</span>
+                <span class="tag-chip">📱 Mobile UI</span>
+            </div>
         </header>
 
-        <!-- Dynamic Social Links Section -->
-        <main class="links-container">
-            <!-- Portfolio Link -->
-            <a href="#" class="link-card portfolio-link" target="_blank" rel="noopener noreferrer">
-                <div class="link-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                </div>
-                <div class="link-details">
-                    <h3>Personal Portfolio</h3>
-                    <p>Explore my latest projects and case studies</p>
-                </div>
-                <div class="link-arrow">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </div>
-            </a>
+        <!-- Navigation Tabs -->
+        <div class="tab-nav">
+            <button class="tab-btn active" data-tab="links">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                Social Links
+            </button>
+            <button class="tab-btn" data-tab="projects">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                Highlights
+            </button>
+            <button class="tab-btn" data-tab="about">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                About Me
+            </button>
+        </div>
 
-            <!-- LinkedIn Link -->
-            <a href="#" class="link-card linkedin-link" target="_blank" rel="noopener noreferrer">
-                <div class="link-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </div>
-                <div class="link-details">
-                    <h3>LinkedIn</h3>
-                    <p>Connect with me professionally</p>
-                </div>
-                <div class="link-arrow">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </div>
-            </a>
+        <!-- TAB CONTENT: Links -->
+        <main class="tab-content active" id="tab-links">
+            <div class="links-grid">
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/aryan-mane-3861ab400?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="link-card linkedin-theme" data-tilt target="_blank" rel="noopener noreferrer">
+                    <div class="card-shimmer"></div>
+                    <div class="link-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    </div>
+                    <div class="link-details">
+                        <h3>LinkedIn</h3>
+                        <p>Professional network & career updates</p>
+                    </div>
+                    <div class="link-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
+                </a>
 
-            <!-- Instagram Link -->
-            <a href="#" class="link-card instagram-link" target="_blank" rel="noopener noreferrer">
-                <div class="link-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                </div>
-                <div class="link-details">
-                    <h3>Instagram</h3>
-                    <p>Follow my creative journey and life updates</p>
-                </div>
-                <div class="link-arrow">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </div>
-            </a>
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/aryanmane_7?igsh=c2c2bTcyODl2Y2dy" class="link-card instagram-theme" data-tilt target="_blank" rel="noopener noreferrer">
+                    <div class="card-shimmer"></div>
+                    <div class="link-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    </div>
+                    <div class="link-details">
+                        <h3>Instagram</h3>
+                        <p>Behind the scenes & visual creative log</p>
+                    </div>
+                    <div class="link-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
+                </a>
 
-            <!-- Twitter/X Link -->
-            <a href="#" class="link-card twitter-link" target="_blank" rel="noopener noreferrer">
-                <div class="link-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
-                </div>
-                <div class="link-details">
-                    <h3>Twitter / X</h3>
-                    <p>Join my tech thoughts and conversations</p>
-                </div>
-                <div class="link-arrow">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </div>
-            </a>
+                <!-- Twitter / X -->
+                <a href="https://x.com/AryanManex7" class="link-card twitter-theme" data-tilt target="_blank" rel="noopener noreferrer">
+                    <div class="card-shimmer"></div>
+                    <div class="link-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                    </div>
+                    <div class="link-details">
+                        <h3>Twitter / X</h3>
+                        <p>Tech thoughts, code snippets, & updates</p>
+                    </div>
+                    <div class="link-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
+                </a>
 
-            <!-- WhatsApp Copy Action -->
-            <div class="link-card whatsapp-link" id="whatsapp-card" data-phone="+1234567890">
-                <div class="link-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                <!-- GitHub -->
+                <a href="https://github.com/manearyan5222" class="link-card github-theme" data-tilt target="_blank" rel="noopener noreferrer">
+                    <div class="card-shimmer"></div>
+                    <div class="link-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    </div>
+                    <div class="link-details">
+                        <h3>GitHub Profile</h3>
+                        <p>Repositories, open-source code & stars</p>
+                    </div>
+                    <div class="link-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
+                </a>
+
+                <!-- Email Contact Card -->
+                <a href="mailto:manearyan5222@gmail.com" class="link-card email-theme" data-tilt>
+                    <div class="card-shimmer"></div>
+                    <div class="link-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                    </div>
+                    <div class="link-details">
+                        <h3>Send Email</h3>
+                        <p>Business inquiries & collaborations</p>
+                    </div>
+                    <div class="link-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </div>
+                </a>
+            </div>
+        </main>
+
+        <!-- TAB CONTENT: Highlights -->
+        <main class="tab-content" id="tab-projects">
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h4>🔥 Portfolio Hub Web App</h4>
+                        <span class="project-tag">HTML/CSS/JS</span>
+                    </div>
+                    <p>Clean, ultra-responsive glassmorphism personal links portal with theme switching and 3D card tilt.</p>
                 </div>
-                <div class="link-details">
-                    <h3>WhatsApp</h3>
-                    <p>Tap to chat directly or copy number</p>
-                </div>
-                <div class="link-action-buttons">
-                    <button class="action-btn chat-btn" title="Chat Now">Chat</button>
-                    <button class="action-btn copy-btn" title="Copy Number">Copy</button>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h4>⚡ Full-Stack Web Suite</h4>
+                        <span class="project-tag">Node / React</span>
+                    </div>
+                    <p>High-performance web apps built with modern APIs, database integrations, and smooth animations.</p>
                 </div>
             </div>
         </main>
 
-        <!-- Interactive Stats / Counter Info section -->
-        <section class="interactive-stats">
-            <div class="stat-box" id="stat-shares">
-                <span class="stat-number" id="share-count">0</span>
-                <span class="stat-label">Shares</span>
+        <!-- TAB CONTENT: About Me -->
+        <main class="tab-content" id="tab-about">
+            <div class="about-card">
+                <h3>Hello World! 👋</h3>
+                <p>I'm <strong>Aryan Mane</strong>, a passionate software developer dedicated to crafting intuitive, visually captivating, and highly functional digital solutions.</p>
+                <div class="skills-section">
+                    <h4>Tech Stack & Tools</h4>
+                    <div class="skills-list">
+                        <span class="skill-badge">JavaScript (ES6+)</span>
+                        <span class="skill-badge">HTML5 / CSS3</span>
+                        <span class="skill-badge">React.js</span>
+                        <span class="skill-badge">Git & GitHub</span>
+                        <span class="skill-badge">Responsive Design</span>
+                        <span class="skill-badge">REST APIs</span>
+                    </div>
+                </div>
             </div>
-            <div class="stat-box" id="stat-likes">
-                <span class="stat-number" id="like-count">0</span>
-                <span class="stat-label">Likes</span>
+        </main>
+
+        <!-- Interactive Stats Counter -->
+        <section class="interactive-stats">
+            <div class="stat-box" id="stat-likes" title="Click to send a like!">
+                <span class="stat-icon">❤️</span>
+                <div class="stat-info">
+                    <span class="stat-number" id="like-count">0</span>
+                    <span class="stat-label">Likes</span>
+                </div>
+            </div>
+            <div class="stat-box" id="stat-shares" title="Click to share profile">
+                <span class="stat-icon">🚀</span>
+                <div class="stat-info">
+                    <span class="stat-number" id="share-count">0</span>
+                    <span class="stat-label">Shares</span>
+                </div>
             </div>
         </section>
 
         <!-- Footer -->
         <footer class="footer">
-            <button class="share-profile-btn" id="share-profile-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                Share Profile
-            </button>
-            <p class="copyright">&copy; <span id="current-year"></span> Your Name. All rights reserved.</p>
+            <div class="footer-actions">
+                <button class="share-profile-btn" id="share-profile-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                    Share Profile
+                </button>
+            </div>
+            <p class="copyright">&copy; <span id="current-year"></span> Aryan Mane. Built with precision.</p>
         </footer>
     </div>
 
-    <!-- Notification Toast -->
+    <!-- QR Code Modal -->
+    <div class="modal-overlay" id="qr-modal">
+        <div class="modal-card">
+            <button class="modal-close" id="qr-modal-close">&times;</button>
+            <h3>Scan QR Code</h3>
+            <p>Scan with your phone camera to open this profile!</p>
+            <div class="qr-code-wrapper" id="qr-code-wrapper">
+                <!-- Pure JS Canvas QR Code will be drawn here -->
+            </div>
+            <p class="qr-url-text" id="qr-url-text"></p>
+            <button class="action-btn copy-url-btn" id="copy-qr-url-btn">Copy Link</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
     <div class="toast" id="toast">Copied to clipboard!</div>
 
     <script src="app.js"></script>
