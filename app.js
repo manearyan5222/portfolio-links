@@ -202,58 +202,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // High-contrast Canvas QR Matrix Renderer
+    // Standard Scannable QR Code Generator
     function generateCanvasQR(text) {
         if (!qrWrapper) return;
         qrWrapper.innerHTML = '';
 
-        const canvas = document.createElement('canvas');
-        const size = 180;
-        canvas.width = size;
-        canvas.height = size;
-        const ctx = canvas.getContext('2d');
+        const img = document.createElement('img');
+        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}&margin=10`;
+        img.alt = 'Profile QR Code';
+        img.width = 180;
+        img.height = 180;
+        img.style.borderRadius = '8px';
+        img.style.display = 'block';
 
-        // White background
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, size, size);
-
-        // Simple procedural matrix representation for clean visualization
-        ctx.fillStyle = '#000000';
-        const gridSize = 21;
-        const cellSize = size / gridSize;
-
-        // Draw positioning boxes (Top Left, Top Right, Bottom Left)
-        drawPositionFinder(ctx, 0, 0, cellSize);
-        drawPositionFinder(ctx, (gridSize - 7) * cellSize, 0, cellSize);
-        drawPositionFinder(ctx, 0, (gridSize - 7) * cellSize, cellSize);
-
-        // Seeded random dots for inner QR body
-        let seed = 0;
-        for (let i = 0; i < text.length; i++) seed += text.charCodeAt(i);
-
-        for (let r = 0; r < gridSize; r++) {
-            for (let c = 0; c < gridSize; c++) {
-                // Skip finder pattern zones
-                if ((r < 7 && c < 7) || (r < 7 && c >= gridSize - 7) || (r >= gridSize - 7 && c < 7)) continue;
-                
-                seed = (seed * 9301 + 49297) % 233280;
-                const rnd = seed / 233280;
-                if (rnd > 0.5) {
-                    ctx.fillRect(Math.round(c * cellSize), Math.round(r * cellSize), Math.ceil(cellSize), Math.ceil(cellSize));
-                }
-            }
-        }
-
-        qrWrapper.appendChild(canvas);
-    }
-
-    function drawPositionFinder(ctx, x, y, cellSize) {
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(x, y, 7 * cellSize, 7 * cellSize);
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(x + cellSize, y + cellSize, 5 * cellSize, 5 * cellSize);
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(x + 2 * cellSize, y + 2 * cellSize, 3 * cellSize, 3 * cellSize);
+        qrWrapper.appendChild(img);
     }
 
     // -----------------------------------------------------------------
