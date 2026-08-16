@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     // -----------------------------------------------------------------
-    // 1. Current Year & Utilities
+    // 1. Current Year & Toast Utilities
     // -----------------------------------------------------------------
     const yearEl = document.getElementById('current-year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    // Toast Notification Utility
     const toast = document.getElementById('toast');
     function showToast(message) {
         if (!toast) return;
@@ -14,28 +13,77 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => toast.classList.remove('show'), 2800);
     }
 
-    // Share Profile Button
-    const shareProfileBtn = document.getElementById('share-profile-btn');
-    if (shareProfileBtn) {
-        shareProfileBtn.addEventListener('click', triggerShare);
-    }
+    // -----------------------------------------------------------------
+    // 2. Dynamic Typing Text Cycler Effect
+    // -----------------------------------------------------------------
+    const typingEl = document.getElementById('typing-text');
+    if (typingEl) {
+        const phrases = [
+            "Modern Web Apps 💻",
+            "Full-Stack Solutions 🚀",
+            "Sleek User Interfaces ✨",
+            "Digital Experiences 🌐"
+        ];
+        let phraseIdx = 0;
+        let charIdx = 0;
+        let isDeleting = false;
 
-    function triggerShare() {
-        if (navigator.share) {
-            navigator.share({
-                title: document.title,
-                text: 'Check out Aryan Mane\'s social links!',
-                url: window.location.href
-            }).catch(err => console.log('Share canceled:', err));
-        } else {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                showToast('Profile link copied to clipboard! ✨');
-            });
+        function typeLoop() {
+            const currentPhrase = phrases[phraseIdx];
+
+            if (isDeleting) {
+                typingEl.textContent = currentPhrase.substring(0, charIdx - 1);
+                charIdx--;
+            } else {
+                typingEl.textContent = currentPhrase.substring(0, charIdx + 1);
+                charIdx++;
+            }
+
+            let typeSpeed = isDeleting ? 40 : 80;
+
+            if (!isDeleting && charIdx === currentPhrase.length) {
+                typeSpeed = 2200; // Pause at full phrase
+                isDeleting = true;
+            } else if (isDeleting && charIdx === 0) {
+                isDeleting = false;
+                phraseIdx = (phraseIdx + 1) % phrases.length;
+                typeSpeed = 400; // Pause before typing next phrase
+            }
+
+            setTimeout(typeLoop, typeSpeed);
         }
+
+        typeLoop();
     }
 
     // -----------------------------------------------------------------
-    // 2. 3D Tilt Effect & Dynamic Mouse Sheen Overlay
+    // 3. Navbar Active State on Scroll
+    // -----------------------------------------------------------------
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+        let currentSection = '';
+        const scrollPosition = window.scrollY + 200;
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSection}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // -----------------------------------------------------------------
+    // 4. 3D Tilt Effect & Dynamic Mouse Sheen Overlay
     // -----------------------------------------------------------------
     const tiltCards = document.querySelectorAll('[data-tilt]');
     tiltCards.forEach(card => {
@@ -47,11 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
 
-            const rotateX = ((y - centerY) / centerY) * -8;
-            const rotateY = ((x - centerX) / centerX) * 8;
+            const rotateX = ((y - centerY) / centerY) * -7;
+            const rotateY = ((x - centerX) / centerX) * 7;
 
             card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-
             card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
             card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
         });
@@ -62,79 +109,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -----------------------------------------------------------------
-    // 3. Theme Switcher Engine
+    // 5. Share Profile Button
     // -----------------------------------------------------------------
-    const themeButtons = document.querySelectorAll('.theme-btn');
-    const savedTheme = localStorage.getItem('portfolio_theme') || 'midnight';
-    setTheme(savedTheme);
-
-    themeButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const themeVal = btn.dataset.themeVal;
-            setTheme(themeVal);
-            localStorage.setItem('portfolio_theme', themeVal);
-            showToast(`Theme switched to ${themeVal.toUpperCase()} ✨`);
-        });
-    });
-
-    function setTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
-        themeButtons.forEach(btn => {
-            if (btn.dataset.themeVal === theme) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
+    const shareProfileBtn = document.getElementById('share-profile-btn');
+    if (shareProfileBtn) {
+        shareProfileBtn.addEventListener('click', triggerShare);
     }
 
-    // -----------------------------------------------------------------
-    // 4. Tab Navigation Engine
-    // -----------------------------------------------------------------
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetTab = btn.dataset.tab;
-
-            tabButtons.forEach(b => b.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
-
-            btn.classList.add('active');
-            const targetEl = document.getElementById(`tab-${targetTab}`);
-            if (targetEl) targetEl.classList.add('active');
-        });
-    });
-
-    // -----------------------------------------------------------------
-    // 5. WhatsApp Actions
-    // -----------------------------------------------------------------
-    const whatsappCard = document.getElementById('whatsapp-card');
-    if (whatsappCard) {
-        const phone = whatsappCard.dataset.phone;
-        const chatBtn = whatsappCard.querySelector('.chat-btn');
-        const copyBtn = whatsappCard.querySelector('.copy-btn');
-
-        if (chatBtn) {
-            chatBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                window.open(`https://wa.me/${phone.replace(/[^0-9]/g, '')}`, '_blank');
-            });
-        }
-
-        if (copyBtn) {
-            copyBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                navigator.clipboard.writeText(phone).then(() => {
-                    showToast(`WhatsApp Number Copied: ${phone}`);
-                });
+    function triggerShare() {
+        if (navigator.share) {
+            navigator.share({
+                title: document.title,
+                text: 'Check out Aryan Mane\'s portfolio & social links!',
+                url: window.location.href
+            }).catch(err => console.log('Share canceled:', err));
+        } else {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                showToast('Profile link copied to clipboard! ✨');
             });
         }
     }
 
     // -----------------------------------------------------------------
-    // 6. QR Code Modal Engine (Pure JS Canvas Generator)
+    // 6. QR Code Modal Engine (Standard Scannable QR Image)
     // -----------------------------------------------------------------
     const qrTrigger = document.getElementById('qr-modal-trigger');
     const qrModal = document.getElementById('qr-modal');
@@ -169,7 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Standard Scannable QR Code Generator
     function generateCanvasQR(text) {
         if (!qrWrapper) return;
         qrWrapper.innerHTML = '';
@@ -230,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
                 ctx.fill();
 
-                // Draw subtle connecting web lines
                 for (let j = idx + 1; j < particles.length; j++) {
                     const p2 = particles[j];
                     const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
@@ -248,36 +243,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         renderCanvas();
-    }
-
-    // -----------------------------------------------------------------
-    // 8. Micro Burst FX on Likes
-    // -----------------------------------------------------------------
-    function createHeartExplosion(element) {
-        const rect = element.getBoundingClientRect();
-        for (let i = 0; i < 10; i++) {
-            const heart = document.createElement('div');
-            heart.innerHTML = '💖';
-            heart.style.position = 'fixed';
-            heart.style.left = `${rect.left + rect.width / 2}px`;
-            heart.style.top = `${rect.top + rect.height / 2}px`;
-            heart.style.fontSize = '1.1rem';
-            heart.style.pointerEvents = 'none';
-            heart.style.zIndex = '999';
-            document.body.appendChild(heart);
-
-            const angle = (i / 10) * Math.PI * 2;
-            const dist = Math.random() * 60 + 30;
-            const destX = Math.cos(angle) * dist;
-            const destY = Math.sin(angle) * dist;
-
-            heart.animate([
-                { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
-                { transform: `translate(calc(-50% + ${destX}px), calc(-50% + ${destY}px)) scale(0)`, opacity: 0 }
-            ], {
-                duration: 850,
-                easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
-            }).onfinish = () => heart.remove();
-        }
     }
 });

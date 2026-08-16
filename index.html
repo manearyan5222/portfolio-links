@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="midnight">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aryan Mane | Portfolio & Connect Hub</title>
-    <meta name="description" content="Official connect hub for Aryan Mane. Links to Portfolio, LinkedIn, Instagram, WhatsApp, Twitter, GitHub, and contact information.">
+    <title>Aryan Mane | Portfolio & Interactive Connect Portal</title>
+    <meta name="description" content="Official interactive website and connect portal for Aryan Mane. Explore social links, projects, and contact info.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,29 +17,32 @@
     <div class="bg-glow-orb orb-1"></div>
     <div class="bg-glow-orb orb-2"></div>
 
-    <!-- Top Action Bar -->
-    <div class="top-bar">
-        <div class="theme-switcher-container">
-            <span class="theme-label">Theme</span>
-            <div class="theme-options">
-                <button class="theme-btn active" data-theme-val="midnight" title="Midnight Glass">🌌</button>
-                <button class="theme-btn" data-theme-val="cyber" title="Cyber Neon">⚡</button>
-                <button class="theme-btn" data-theme-val="aurora" title="Aurora Violet">✨</button>
-                <button class="theme-btn" data-theme-val="sunset" title="Sunset Gold">🌅</button>
+    <!-- Interactive Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="nav-brand">
+                <span class="brand-badge">AM</span>
+                <span class="brand-text">Aryan Mane</span>
+            </a>
+            <div class="nav-links">
+                <a href="#hero" class="nav-link active">Home</a>
+                <a href="#links" class="nav-link">Connect</a>
+                <a href="#about" class="nav-link">About</a>
+                <button class="icon-action-btn" id="qr-modal-trigger" title="Show QR Code">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                </button>
             </div>
         </div>
-        <button class="icon-action-btn" id="qr-modal-trigger" title="Show QR Code">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-        </button>
-    </div>
+    </nav>
 
     <!-- Main Container -->
     <div class="container">
-        <!-- Profile Header -->
-        <header class="profile-card">
+        
+        <!-- SECTION 1: HERO LANDING PAGE -->
+        <section class="hero-section" id="hero">
             <div class="status-badge">
                 <span class="status-pulse"></span>
-                <span>Available for Projects</span>
+                <span>Open for Projects & Collaborations</span>
             </div>
 
             <div class="avatar-container">
@@ -48,36 +51,65 @@
                 <img src="avatar-placeholder.png" alt="Aryan Mane Profile" class="profile-avatar" id="profile-avatar">
             </div>
 
-            <h1 class="profile-name">Aryan Mane</h1>
-            <p class="profile-handle">@manearyan5222</p>
-            <p class="profile-bio">Full-Stack Developer & Tech Enthusiast building high-performance web applications and sleek digital experiences.</p>
-
-            <div class="tags-container">
-                <span class="tag-chip">💻 Web Dev</span>
-                <span class="tag-chip">🚀 Creative Tech</span>
-                <span class="tag-chip">✨ Open Source</span>
-                <span class="tag-chip">📱 Mobile UI</span>
+            <h1 class="hero-title">Hi, I'm <span class="gradient-text">Aryan Mane</span></h1>
+            
+            <!-- Animated Typing Subtitle -->
+            <div class="typing-container">
+                <span>Building </span>
+                <span class="typing-text" id="typing-text"></span>
+                <span class="typing-cursor">|</span>
             </div>
-        </header>
 
-        <!-- Navigation Tabs -->
-        <div class="tab-nav">
-            <button class="tab-btn active" data-tab="links">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                Social Links
-            </button>
-            <button class="tab-btn" data-tab="projects">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                Highlights
-            </button>
-            <button class="tab-btn" data-tab="about">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                About Me
-            </button>
-        </div>
+            <p class="hero-bio">
+                Passionate software developer crafting high-performance, visually captivating, and user-centric web applications for mobile and desktop.
+            </p>
 
-        <!-- TAB CONTENT: Links -->
-        <main class="tab-content active" id="tab-links">
+            <!-- CTA Action Buttons -->
+            <div class="hero-actions">
+                <a href="#links" class="btn btn-primary">
+                    Connect With Me
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+                <a href="mailto:manearyan5222@gmail.com" class="btn btn-secondary">
+                    Send Email ✉️
+                </a>
+            </div>
+
+            <!-- Skill Tags -->
+            <div class="tags-container">
+                <span class="tag-chip">💻 Full-Stack Dev</span>
+                <span class="tag-chip">⚡ Responsive Web</span>
+                <span class="tag-chip">✨ Modern UI/UX</span>
+                <span class="tag-chip">🚀 Open Source</span>
+            </div>
+
+            <!-- Feature Cards Grid -->
+            <div class="hero-features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>High Performance</h3>
+                    <p>Clean, fast, and responsive digital solutions designed for all screen sizes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Modern Design</h3>
+                    <p>Glassmorphic UI aesthetics, micro-interactions, and 3D card physics.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Full-Stack & APIs</h3>
+                    <p>Building seamless end-to-end applications with modern web architecture.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: SOCIAL LINKS DIRECTORY -->
+        <section class="links-section" id="links">
+            <div class="section-header">
+                <h2>Connect & Socials</h2>
+                <p>Find me across the web and get in touch</p>
+            </div>
+
             <div class="links-grid">
                 <!-- LinkedIn -->
                 <a href="https://www.linkedin.com/in/aryan-mane-3861ab400?utm_source=share_via&utm_content=profile&utm_medium=member_android" class="link-card linkedin-theme" data-tilt target="_blank" rel="noopener noreferrer">
@@ -147,53 +179,34 @@
                     </div>
                     <div class="link-details">
                         <h3>Send Email</h3>
-                        <p>Business inquiries & collaborations</p>
+                        <p>Direct contact & business inquiries</p>
                     </div>
                     <div class="link-arrow">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </div>
                 </a>
             </div>
-        </main>
+        </section>
 
-        <!-- TAB CONTENT: Highlights -->
-        <main class="tab-content" id="tab-projects">
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <h4>🔥 Portfolio Hub Web App</h4>
-                        <span class="project-tag">HTML/CSS/JS</span>
-                    </div>
-                    <p>Clean, ultra-responsive glassmorphism personal links portal with theme switching and 3D card tilt.</p>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <h4>⚡ Full-Stack Web Suite</h4>
-                        <span class="project-tag">Node / React</span>
-                    </div>
-                    <p>High-performance web apps built with modern APIs, database integrations, and smooth animations.</p>
-                </div>
-            </div>
-        </main>
-
-        <!-- TAB CONTENT: About Me -->
-        <main class="tab-content" id="tab-about">
+        <!-- SECTION 3: ABOUT ME -->
+        <section class="about-section" id="about">
             <div class="about-card">
-                <h3>Hello World! 👋</h3>
-                <p>I'm <strong>Aryan Mane</strong>, a passionate software developer dedicated to crafting intuitive, visually captivating, and highly functional digital solutions.</p>
+                <h2>Hello World! 👋</h2>
+                <p>I'm <strong>Aryan Mane</strong>, a software developer passionate about constructing intuitive, visually captivating, and scalable web solutions. From sleek UI interactions to robust back-end integrations, I thrive on bringing ideas to life.</p>
                 <div class="skills-section">
-                    <h4>Tech Stack & Tools</h4>
+                    <h3>Tech Stack & Tools</h3>
                     <div class="skills-list">
                         <span class="skill-badge">JavaScript (ES6+)</span>
                         <span class="skill-badge">HTML5 / CSS3</span>
                         <span class="skill-badge">React.js</span>
+                        <span class="skill-badge">Node.js</span>
                         <span class="skill-badge">Git & GitHub</span>
                         <span class="skill-badge">Responsive Design</span>
                         <span class="skill-badge">REST APIs</span>
                     </div>
                 </div>
             </div>
-        </main>
+        </section>
 
         <!-- Footer -->
         <footer class="footer">
@@ -203,7 +216,7 @@
                     Share Profile
                 </button>
             </div>
-            <p class="copyright">&copy; <span id="current-year"></span> Aryan Mane. Built with precision.</p>
+            <p class="copyright">&copy; <span id="current-year"></span> Aryan Mane. Designed & Built with Precision.</p>
         </footer>
     </div>
 
@@ -213,9 +226,7 @@
             <button class="modal-close" id="qr-modal-close">&times;</button>
             <h3>Scan QR Code</h3>
             <p>Scan with your phone camera to open this profile!</p>
-            <div class="qr-code-wrapper" id="qr-code-wrapper">
-                <!-- Pure JS Canvas QR Code will be drawn here -->
-            </div>
+            <div class="qr-code-wrapper" id="qr-code-wrapper"></div>
             <p class="qr-url-text" id="qr-url-text"></p>
             <button class="action-btn copy-url-btn" id="copy-qr-url-btn">Copy Link</button>
         </div>
