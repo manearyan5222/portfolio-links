@@ -244,4 +244,96 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderCanvas();
     }
+
+    // -----------------------------------------------------------------
+    // 8. AI Assistant Chatbot Engine
+    // -----------------------------------------------------------------
+    const aiToggleBtn = document.getElementById('ai-widget-toggle');
+    const aiChatWindow = document.getElementById('ai-chat-window');
+    const aiChatClose = document.getElementById('ai-chat-close');
+    const aiChatMessages = document.getElementById('ai-chat-messages');
+    const aiChatForm = document.getElementById('ai-chat-form');
+    const aiChatInput = document.getElementById('ai-chat-input');
+    const chipBtns = document.querySelectorAll('.chip-btn');
+
+    if (aiToggleBtn && aiChatWindow) {
+        aiToggleBtn.addEventListener('click', () => {
+            aiChatWindow.classList.toggle('show');
+            if (aiChatWindow.classList.contains('show') && aiChatInput) {
+                aiChatInput.focus();
+            }
+        });
+
+        if (aiChatClose) {
+            aiChatClose.addEventListener('click', () => {
+                aiChatWindow.classList.remove('show');
+            });
+        }
+
+        chipBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const query = btn.dataset.query;
+                handleUserMessage(query);
+            });
+        });
+
+        if (aiChatForm) {
+            aiChatForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const text = aiChatInput.value.trim();
+                if (!text) return;
+                aiChatInput.value = '';
+                handleUserMessage(text);
+            });
+        }
+    }
+
+    function handleUserMessage(userText) {
+        // Append User Message
+        appendMessage(userText, 'user-msg');
+
+        // Typing Indicator
+        const typingIndicator = document.createElement('div');
+        typingIndicator.className = 'ai-msg bot-msg typing-ind';
+        typingIndicator.textContent = '🤖 typing...';
+        aiChatMessages.appendChild(typingIndicator);
+        aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+
+        // Generate Bot Response
+        setTimeout(() => {
+            typingIndicator.remove();
+            const responseText = getAIResponse(userText);
+            appendMessage(responseText, 'bot-msg');
+        }, 650);
+    }
+
+    function appendMessage(text, className) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `ai-msg ${className}`;
+        msgDiv.innerHTML = `<p>${text}</p>`;
+        aiChatMessages.appendChild(msgDiv);
+        aiChatMessages.scrollTop = aiChatMessages.scrollHeight;
+    }
+
+    function getAIResponse(query) {
+        const q = query.toLowerCase();
+
+        if (q.includes('skill') || q.includes('stack') || q.includes('tech') || q.includes('language')) {
+            return "💻 <b>Aryan's Key Skills:</b><br/>• JavaScript (ES6+), React.js, Node.js<br/>• HTML5, CSS3 & Responsive UI<br/>• REST APIs, Git & GitHub";
+        }
+
+        if (q.includes('contact') || q.includes('email') || q.includes('reach') || q.includes('message')) {
+            return "📫 <b>Get in Touch:</b><br/>You can email Aryan directly at <a href='mailto:manearyan5222@gmail.com' style='color:#38bdf8;'>manearyan5222@gmail.com</a>!";
+        }
+
+        if (q.includes('social') || q.includes('link') || q.includes('profile') || q.includes('linkedin') || q.includes('instagram') || q.includes('twitter') || q.includes('github')) {
+            return "🔗 <b>Aryan's Social Profiles:</b><br/>• <a href='https://www.linkedin.com/in/aryan-mane-3861ab400' target='_blank' style='color:#38bdf8;'>LinkedIn</a><br/>• <a href='https://www.instagram.com/aryanmane_7' target='_blank' style='color:#ec4899;'>Instagram</a><br/>• <a href='https://x.com/AryanManex7' target='_blank' style='color:#38bdf8;'>Twitter / X</a><br/>• <a href='https://github.com/manearyan5222' target='_blank' style='color:#a855f7;'>GitHub</a>";
+        }
+
+        if (q.includes('who') || q.includes('aryan') || q.includes('about') || q.includes('background') || q.includes('bio')) {
+            return "⚡ <b>About Aryan Mane:</b><br/>Aryan is a software developer passionate about building high-performance, responsive web applications and sleek digital experiences.";
+        }
+
+        return "I'm Aryan's AI assistant! Try asking about his <b>skills</b>, <b>social profiles</b>, or <b>how to contact him</b>.";
+    }
 });

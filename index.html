@@ -232,6 +232,47 @@
         </div>
     </div>
 
+    <!-- Floating AI Chatbot Widget -->
+    <div class="ai-widget-container">
+        <button class="ai-widget-btn" id="ai-widget-toggle" title="Chat with Aryan's AI Assistant">
+            <span class="ai-btn-icon">🤖</span>
+            <span class="ai-btn-text">Ask AI</span>
+        </button>
+
+        <div class="ai-chat-window" id="ai-chat-window">
+            <div class="ai-chat-header">
+                <div class="ai-header-info">
+                    <div class="ai-avatar-mini">🤖</div>
+                    <div>
+                        <h4>Aryan's AI Assistant</h4>
+                        <span class="ai-status">🟢 Online & Ready</span>
+                    </div>
+                </div>
+                <button class="ai-chat-close" id="ai-chat-close">&times;</button>
+            </div>
+
+            <div class="ai-chat-messages" id="ai-chat-messages">
+                <div class="ai-msg bot-msg">
+                    <p>Hi there! 👋 I'm Aryan's AI assistant. Ask me anything about his skills, social profiles, or how to get in touch!</p>
+                </div>
+            </div>
+
+            <div class="ai-quick-chips">
+                <button class="chip-btn" data-query="Who is Aryan?">⚡ Who is Aryan?</button>
+                <button class="chip-btn" data-query="What are his skills?">💻 Skills</button>
+                <button class="chip-btn" data-query="How can I contact him?">📫 Contact Info</button>
+                <button class="chip-btn" data-query="Where are his social links?">🔗 Social Links</button>
+            </div>
+
+            <form class="ai-chat-input-area" id="ai-chat-form">
+                <input type="text" id="ai-chat-input" placeholder="Ask AI something..." autocomplete="off" />
+                <button type="submit" class="ai-send-btn" id="ai-send-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div class="toast" id="toast">Copied to clipboard!</div>
 
