@@ -1,7 +1,7 @@
 <div align="center">
 
-  <h1>✨ Aryan Mane — Portfolio & Social Links Hub</h1>
-  <p><b>An ultra-sleek 3D glassmorphic social links directory & personal connect portal.</b></p>
+  <h1>✨ Aryan Mane — Interactive Portfolio & Landing Page</h1>
+  <p><b>An ultra-sleek, responsive interactive landing page and connect portal.</b></p>
 
   <p>
     <a href="https://manearyan5222.github.io/portfolio-links/"><strong>🌐 View Live Site »</strong></a>
@@ -28,20 +28,16 @@
 
 ## 🌟 Overview
 
-Welcome to the official **Connect Hub & Portfolio Directory** for **Aryan Mane**! Built with modern web technologies, this responsive single-page web app features futuristic glassmorphic UI elements, 3D interactive tilt cards, ambient particle canvas background, a live QR Code modal, and dynamic color theme presets.
+Welcome to the official **Interactive Landing Page & Connect Portal** for **Aryan Mane**! Built with modern web technologies, this responsive web app features a glassmorphic hero section, live typing subtitle animation, sticky navigation header, 3D perspective tilt cards, ambient starfield canvas, and standard scannable QR Code modal.
 
 ### ✨ Key Features
 
-- **🧊 3D Perspective Glassmorphism**: Interactive cards that dynamically tilt in 3D space (`perspective(1000px)`) and project a radial spotlight sheen following your cursor.
-- **🎨 4 Theme Presets**:
-  - 🌌 **Midnight Glass** *(Default Indigo/Purple)*
-  - ⚡ **Cyber Neon** *(Electric Cyan & Hot Pink)*
-  - ✨ **Aurora Violet** *(Emerald & Violet Glow)*
-  - 🌅 **Sunset Gold** *(Warm Amber & Rose)*
-- **📱 Dynamic QR Code Generator**: Generates a standard scannable QR matrix instantly for mobile devices.
-- **🗂️ Interactive Tab Switcher**: Smooth navigation between **Social Links**, **Highlights**, and **About Me**.
-- **🟢 Live Status Badge**: Pulsing indicator showing real-time availability.
-- **⚡ Ambient Particle Web**: Floating ambient background particles with dynamic line connections.
+- **🚀 Interactive Hero Section**: Live typing subtitle cycler, call-to-action buttons, and feature cards.
+- **🌐 Sticky Glassmorphic Navbar**: Smooth-scrolling navigation header (`AM Aryan Mane | Home | Connect | About`).
+- **🧊 3D Perspective Glassmorphism**: Interactive social cards with 3D tilt (`perspective(1000px)`) and cursor spotlight sheen.
+- **📱 Standard Scannable QR Code**: Mobile-ready QR modal for instant scanning.
+- **🟢 Live Status Badge**: Pulsing real-time availability indicator.
+- **⚡ Ambient Particle Web**: Floating starfield particles with dynamic connection lines.
 
 ---
 
@@ -59,12 +55,12 @@ Welcome to the official **Connect Hub & Portfolio Directory** for **Aryan Mane**
 
 ```text
 portfolio-links/
-├── index.html              # Main HTML markup & structure
-├── style.css               # Design system, glassmorphism, themes & animations
-├── app.js                  # Particle canvas, 3D tilt, theme switcher & QR engine
+├── index.html              # Main HTML markup, Navbar & Hero section
+├── style.css               # Ultra-premium design system & responsive layout
+├── app.js                  # Typing animation, 3D tilt, scroll nav & QR generator
 ├── avatar-placeholder.png  # High-res profile avatar asset
-├── push.ps1                 # Automated Git commit & deployment script
-└── README.md               # Documentation & repository guide
+├── push.ps1                 # Git push helper script
+└── README.md               # Repository documentation
 ```
 
 ---
@@ -78,7 +74,7 @@ cd portfolio-links
 ```
 
 ### 2. Run locally
-Simply open `index.html` in your web browser!
+Simply open `index.html` in any web browser!
 
 ---
 
